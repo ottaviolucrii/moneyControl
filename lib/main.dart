@@ -11,6 +11,7 @@ class MoneyControlApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       title: 'Money Control',
+      
       home: HomePage(),
     );
   }
