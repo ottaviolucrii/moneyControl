@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:money_control/transaction.dart';
-import 'package:money_control/components/trasactions_list.dart';
+import './components/trasactions_list.dart';
+import './components/transaction_user.dart';
 
 main() {
   runApp(const MoneyControlApp());
@@ -18,29 +18,6 @@ class MoneyControlApp extends StatelessWidget {
 }
 
 class HomePage extends StatelessWidget {
-  HomePage({super.key});
-
-
-  final _transactions = [
-    Transaction(
-      id: 't1',
-      title: 'Nova raquete de Beach Tennis',
-      value: 3750.00,
-      date: DateTime.now(),
-    ),
-    Transaction(
-      id: 't2',
-      title: 'Nova camiseta da DropShot',
-      value: 150.00,
-      date: DateTime.now(),
-    ),
-    Transaction(
-      id: 't3',
-      title: 'Raqueteira',
-      value: 950.00,
-      date: DateTime.now(),
-    ),
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -61,10 +38,7 @@ class HomePage extends StatelessWidget {
               elevation: 5,
             ),
           ),
-
-          TransactionList(_transactions),
-
-          
+          TransactionUser(),
         ],
       ),
     );
