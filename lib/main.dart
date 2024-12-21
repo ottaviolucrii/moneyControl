@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-main () {
+main() {
   runApp(const MoneyControlApp());
 }
 
@@ -23,10 +23,26 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Money Control - Financial!'),
+        title: Text('Money Control - Financial estability!'),
       ),
-      body: const Center(
-        child: Text('Versão inicial!'),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          Container(
+            width: double.infinity,
+            child: Card(
+              color: Colors.blue,
+              child: Center (
+                child: Text('Gráfico'),
+              ),
+              elevation: 5,
+            ),
+          ),
+          Card(
+            child: Text('Lista de transações')
+          ),
+        ],
       ),
     );
   }
