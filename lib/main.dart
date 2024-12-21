@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:money_control/transaction.dart';
+import 'package:money_control/components/trasactions_list.dart';
 
 main() {
   runApp(const MoneyControlApp());
@@ -18,6 +19,8 @@ class MoneyControlApp extends StatelessWidget {
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});
+
+
   final _transactions = [
     Transaction(
       id: 't1',
@@ -43,10 +46,9 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Money Control - Financial estability!'),
+        title: Text('Money Control - Financial stability!'),
       ),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           Container(
@@ -59,61 +61,10 @@ class HomePage extends StatelessWidget {
               elevation: 5,
             ),
           ),
-          Column(
-            children: _transactions.map((tr) {
-              return Card(
-                child: Row(
-                  children: <Widget>[
-                    Container(
-                      margin: EdgeInsets.symmetric(
-                        horizontal: 15,
-                        vertical: 10,
-                      ),
-                      decoration: BoxDecoration(
-                        color: Colors.black,
-                        border: Border.all(
-                          color: Colors.black,
-                          width: 2,
-                        ),
-                      ),
-                      padding: EdgeInsets.all(10),
-                      child: Text(
-                        tr.value.toString(),
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                          color: Colors.yellow,
-                        ),
-                      ),
-                    ),
-                    Column(
-                      children: <Widget>[
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              tr.title,
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                              ),
-                              ),
-                            Text(
-                              tr.date.toString(),
-                              style: TextStyle(
-                                color: const Color.fromARGB(255, 110, 110, 110),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              );
-            }).toList(),
-          ),
+
+          TransactionList(_transactions),
+
+          
         ],
       ),
     );
