@@ -87,6 +87,7 @@ class _TransactionFormState extends State<TransactionForm> {
                   ),
                 ),
               ),
+              
               TextField(
                 controller: _valueController,
                 keyboardType: TextInputType.numberWithOptions(decimal: true),
