@@ -14,11 +14,21 @@ class MoneyControlApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: HomePage(),
       theme: ThemeData(
         primaryColorDark: Colors.blue[900],
-      ),
-    );
+        fontFamily: 'Quicksand',
+        appBarTheme: AppBarTheme(
+          titleTextStyle: 
+              TextStyle(
+              fontFamily: 'OpenSans',
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
+          ),
+        ),
+        home: HomePage(),
+      );
   }
 }
 
@@ -41,6 +51,7 @@ class _HomePageState extends State<HomePage> {
       value: 150.00,
       date: DateTime.now(),
     ),
+    
   ];
 
   _openTransactionFormModal(BuildContext context) {
@@ -71,9 +82,10 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Money Control - Financial stability!'),
+        title: Text('Money Control  💳'),
         titleTextStyle: TextStyle(
-          fontSize: 20,
+          fontFamily: 'OpenSans',
+          fontSize: 26,
           fontWeight: FontWeight.bold,
           color: Colors.white,
         ),
