@@ -3,6 +3,7 @@ import './components/transaction_form.dart';
 import './components/trasactions_list.dart';
 import '../transaction.dart';
 import 'dart:math';
+import './components/chart.dart';
 
 main() {
   runApp(const MoneyControlApp());
@@ -25,6 +26,15 @@ class MoneyControlApp extends StatelessWidget {
               fontWeight: FontWeight.bold,
               color: Colors.white,
             ),
+              toolbarTextStyle: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          textSelectionTheme: TextSelectionThemeData(
+            cursorColor: Colors.white, // Cor do cursor
+            selectionColor: Colors.blue[300], // Cor do retângulo de seleção
+            selectionHandleColor: Theme.of(context).primaryColorDark, // Cor do handle de seleção
           ),
         ),
         home: HomePage(),
@@ -61,6 +71,16 @@ class _HomePageState extends State<HomePage> {
         return TransactionForm(_addTransaction);
       },
     );
+  }
+
+  List <Transaction> get _recentTransactions {
+    return _transactions.where((tr) {
+      return tr.date.isAfter(
+        DateTime.now().subtract(
+          Duration(days: 7),
+        ),
+      );
+    }).toList();
   }
 
   _addTransaction(String title, double value) {
@@ -102,22 +122,7 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Container(
-              width: double.infinity,
-              child: Card(
-                color: Theme.of(context).primaryColorDark,
-                child: Center(
-                  child: Text(
-                    'Gráfico',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                    ),
-                  ),
-                ),
-                elevation: 5,
-              ),
-            ),
+            Chart(_recentTransactions),
             TransactionList(_transactions),
           ],
         ),
