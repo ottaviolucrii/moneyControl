@@ -52,6 +52,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+
   _addTransaction(String title, double value) {
     final newTransaction = Transaction(
       id: Random().nextDouble().toString(),
