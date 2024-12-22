@@ -3,6 +3,7 @@ import './components/transaction_form.dart';
 import './components/trasactions_list.dart';
 import '../transaction.dart';
 import 'dart:math';
+import './components/chart.dart';
 
 main() {
   runApp(const MoneyControlApp());
@@ -14,11 +15,30 @@ class MoneyControlApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: HomePage(),
       theme: ThemeData(
         primaryColorDark: Colors.blue[900],
-      ),
-    );
+        fontFamily: 'Quicksand',
+        appBarTheme: AppBarTheme(
+          titleTextStyle: 
+              TextStyle(
+              fontFamily: 'OpenSans',
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
+              toolbarTextStyle: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          textSelectionTheme: TextSelectionThemeData(
+            cursorColor: Colors.white, // Cor do cursor
+            selectionColor: Colors.blue[300], // Cor do retângulo de seleção
+            selectionHandleColor: Theme.of(context).primaryColorDark, // Cor do handle de seleção
+          ),
+        ),
+        home: HomePage(),
+      );
   }
 }
 
@@ -28,20 +48,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final _transactions = [
-    Transaction(
-      id: 't1',
-      title: 'Nova raquete de Beach Tennis',
-      value: 3750.00,
-      date: DateTime.now(),
-    ),
-    Transaction(
-      id: 't2',
-      title: 'Nova camiseta da DropShot',
-      value: 150.00,
-      date: DateTime.now(),
-    ),
-  ];
+  final List <Transaction> _transactions = [];
 
   _openTransactionFormModal(BuildContext context) {
     showModalBottomSheet(
@@ -51,14 +58,31 @@ class _HomePageState extends State<HomePage> {
       },
     );
   }
+  
+  _removeTransaction(String id) {
+    setState(() {
+      _transactions.removeWhere((tr) {
+        return tr.id == id;
+      });
+    });
+  }
 
+  List <Transaction> get _recentTransactions {
+    return _transactions.where((tr) {
+      return tr.date.isAfter(
+        DateTime.now().subtract(
+          Duration(days: 7),
+        ),
+      );
+    }).toList();
+  }
 
-  _addTransaction(String title, double value) {
+  _addTransaction(String title, double value, DateTime date) {
     final newTransaction = Transaction(
       id: Random().nextDouble().toString(),
       title: title,
       value: value,
-      date: DateTime.now(),
+      date: date,
     );
 
     setState(() {
@@ -72,9 +96,10 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Money Control - Financial stability!'),
+        title: Text('Money Control  💳'),
         titleTextStyle: TextStyle(
-          fontSize: 20,
+          fontFamily: 'OpenSans',
+          fontSize: 26,
           fontWeight: FontWeight.bold,
           color: Colors.white,
         ),
@@ -91,23 +116,8 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Container(
-              width: double.infinity,
-              child: Card(
-                color: Theme.of(context).primaryColorDark,
-                child: Center(
-                  child: Text(
-                    'Gráfico',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                    ),
-                  ),
-                ),
-                elevation: 5,
-              ),
-            ),
-            TransactionList(_transactions),
+            Chart(_recentTransactions),
+            TransactionList(_transactions, _removeTransaction),
           ],
         ),
       ),
